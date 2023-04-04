@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <PackageDescription>Equipment service used in HarvestHelper</PackageDescription>
+    <Authors>Duarte Somsen</Authors>
+    <Company>Harvest Helper</Company>
   </PropertyGroup>
 
 </Project>
