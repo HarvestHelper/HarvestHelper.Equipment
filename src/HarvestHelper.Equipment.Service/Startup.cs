@@ -13,6 +13,7 @@ using HarvestHelper.Equipment.Service.Entities;
 using HarvestHelper.Common.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using HarvestHelper.Common.Identity;
+using GreenPipes;
 
 namespace HarvestHelper.Equipment.Service
 {
@@ -34,10 +35,14 @@ namespace HarvestHelper.Equipment.Service
 
             services.AddMongo()
                     .AddMongoRepository<EquipmentItem>("equipmentitems")
-                    .AddMassTransitWithRabbitMq()
                     .AddJwtBearerAuthentication();
 
-            services.AddAuthorization(options => 
+            services.AddMassTransitWithMessageBroker(Configuration, retryConfigurator =>
+                    {
+                        retryConfigurator.Interval(3, TimeSpan.FromSeconds(5));
+                    });
+
+            services.AddAuthorization(options =>
             {
                 options.AddPolicy(Policies.Read, policy =>
                 {
