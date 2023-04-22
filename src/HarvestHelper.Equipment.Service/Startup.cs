@@ -20,6 +20,8 @@ namespace HarvestHelper.Equipment.Service
 {
     public class Startup
     {
+        private const string AllowedOriginSetting = "AllowedOrigin";
+
         private ServiceSettings serviceSettings;
 
         public Startup(IConfiguration configuration)
@@ -36,12 +38,8 @@ namespace HarvestHelper.Equipment.Service
 
             services.AddMongo()
                     .AddMongoRepository<EquipmentItem>("equipmentitems")
+                    .AddMassTransitWithMessageBroker(Configuration)
                     .AddJwtBearerAuthentication();
-
-            services.AddMassTransitWithMessageBroker(Configuration, retryConfigurator =>
-                    {
-                        retryConfigurator.Interval(3, TimeSpan.FromSeconds(5));
-                    });
 
             services.AddAuthorization(options =>
             {
@@ -80,6 +78,14 @@ namespace HarvestHelper.Equipment.Service
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HarvestHelper.Equipment.Service v1"));
+
+                app.UseCors(builder =>
+                {
+                    builder.WithOrigins(Configuration[AllowedOriginSetting])
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });  
+
             }
 
             app.UseHttpsRedirection();
