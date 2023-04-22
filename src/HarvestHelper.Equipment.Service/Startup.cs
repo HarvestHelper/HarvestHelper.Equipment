@@ -14,6 +14,7 @@ using HarvestHelper.Common.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using HarvestHelper.Common.Identity;
 using GreenPipes;
+using HarvestHelper.Common.HealthChecks;
 
 namespace HarvestHelper.Equipment.Service
 {
@@ -66,6 +67,9 @@ namespace HarvestHelper.Equipment.Service
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HarvestHelper.Equipment.Service", Version = "v1" });
             });
+
+            services.AddHealthChecks()
+                    .AddMongoDb();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,6 +93,7 @@ namespace HarvestHelper.Equipment.Service
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHarvestHelperHealthChecks();
             });
         }
     }
