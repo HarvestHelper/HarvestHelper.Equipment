@@ -1,0 +1,18 @@
+microserviceName : "equipment"
+
+image: 
+  repository: harvesthelper.azurecr.io/harvesthelper.equipment
+  tag: 1.0.4
+
+envVariables:
+   ServiceSettings__Authority: https://harvesthelper.westeurope.cloudapp.azure.com/identity-svc
+
+resources:
+  limits:
+    memory: "128Mi"
+    cpu: "150m"
+
+container:
+  port: 5000 
+
+identityClientId: 855b9492-23c7-4d54-a82a-fa2cb0f15dd9
