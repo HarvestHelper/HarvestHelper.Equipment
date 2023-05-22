@@ -15,4 +15,4 @@ resources:
 container:
   port: 5000 
 
-identityClientId: 855b9492-23c7-4d54-a82a-fa2cb0f15dd9
+identityClientId: 859449f8-bde6-4c57-9057-d8c684373575

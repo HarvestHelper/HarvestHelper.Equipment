@@ -59,6 +59,6 @@ kind: ServiceAccount
 metadata: 
   name: equipment-serviceaccount
   annotations: 
-    azure.workload.identity/client-id: 855b9492-23c7-4d54-a82a-fa2cb0f15dd9
+    azure.workload.identity/client-id: 859449f8-bde6-4c57-9057-d8c684373575
   labels: 
     azure.workload.identity/use: "true"
