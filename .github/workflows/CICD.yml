@@ -111,6 +111,7 @@ jobs:
       - name: Deploy Helm Chart
         run: |
           helm upgrade ${{env.SERVICE_NAME}}-service oci://${{env.APP_NAME}}.azurecr.io/helm/microservice --version ${{env.HELM_CHART_VERSION}} -f helm/values.yaml -n ${{env.SERVICE_NAME}} --set image.tag=${{needs.generate-version.outputs.new_version}} --install --wait
+  
   build:
     name: Build and analyze
     runs-on: windows-latest
@@ -148,6 +149,10 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
+          $owner="HarvestHelper"
+          $gh_pat="${{secrets.GH_PAT}}"
+
+          dotnet nuget add source --username Duarte --password $gh_pat --store-password-in-clear-text --name github "https://nuget.pkg.github.com/$owner/index.json"
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"HarvestHelper_HarvestHelper.Equipment" /o:"harvesthelper" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet build
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
