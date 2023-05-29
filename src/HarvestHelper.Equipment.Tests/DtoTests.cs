@@ -4,7 +4,7 @@ using HarvestHelper.Equipment.Service.Entities;
 
 namespace HarvestHelper.Equipment.Tests;
 
-public class UnitTest1
+public class DtoTests
 {
     [Fact]
     public void AsDto_ConvertsEquipmentItemToEquipmentDto()
@@ -26,4 +26,6 @@ public class UnitTest1
         Assert.Equal(equipmentItem.Name, result.Name);
         Assert.Equal(equipmentItem.DateAdded, result.DateAdded);
     }
+
+    
 }

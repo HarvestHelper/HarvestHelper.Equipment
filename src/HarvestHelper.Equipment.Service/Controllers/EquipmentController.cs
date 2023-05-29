@@ -50,7 +50,7 @@ namespace HarvestHelper.Equipment.Service.Controllers
                 return NotFound();
             }
 
-            return item.AsDto();
+            return Ok(item.AsDto());
         }
 
         // POST /items
