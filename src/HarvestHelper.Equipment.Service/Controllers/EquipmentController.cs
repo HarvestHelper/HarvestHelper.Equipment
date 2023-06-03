@@ -66,7 +66,6 @@ namespace HarvestHelper.Equipment.Service.Controllers
             await equipmentRepository.CreateAsync(equipment);
 
             await publishEndpoint.Publish(new EquipmentItemCreated(equipment.Id, equipment.Name));
-
             return CreatedAtAction(nameof(GetByIdAsync), new { id = equipment.Id }, equipment);
         }
 
