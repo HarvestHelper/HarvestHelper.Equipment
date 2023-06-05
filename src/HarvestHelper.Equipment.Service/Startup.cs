@@ -41,6 +41,24 @@ namespace HarvestHelper.Equipment.Service
                     .AddMassTransitWithMessageBroker(Configuration)
                     .AddJwtBearerAuthentication();
 
+            this.ConfigureAuth(services);
+
+            services.AddControllers(options =>
+            {
+                options.SuppressAsyncSuffixInActionNames = false;
+            });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "HarvestHelper.Equipment.Service", Version = "v1" });
+            });
+
+            services.AddHealthChecks()
+                    .AddMongoDb();
+        }
+
+        protected virtual void ConfigureAuth(IServiceCollection services)
+        {
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(Policies.Read, policy =>
@@ -55,19 +73,6 @@ namespace HarvestHelper.Equipment.Service
                     policy.RequireClaim("scope", "equipment.fullaccess", "equipment.writeaccess");
                 });
             });
-
-            services.AddControllers(options =>
-            {
-                options.SuppressAsyncSuffixInActionNames = false;
-            });
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "HarvestHelper.Equipment.Service", Version = "v1" });
-            });
-
-            services.AddHealthChecks()
-                    .AddMongoDb();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -36,7 +36,7 @@ public class EquipmentIntegrationTest : IClassFixture<WebApplicationFactory<Star
 
 	public EquipmentIntegrationTest(WebApplicationFactory<Startup> factory)
     {
-		var webApplicationFactory = new WebApplicationFactory<Program>();
+		var webApplicationFactory = new WebApplicationFactory<TestStartup>();
 		_httpClient = webApplicationFactory.CreateDefaultClient();
 	}
 
