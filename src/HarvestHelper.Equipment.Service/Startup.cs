@@ -1,19 +1,9 @@
-using System;
-using System.Net.Http;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using HarvestHelper.Common.MassTransit;
 using HarvestHelper.Common.MongoDB;
 using HarvestHelper.Equipment.Service.Entities;
 using HarvestHelper.Common.Settings;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using HarvestHelper.Common.Identity;
-using GreenPipes;
 using HarvestHelper.Common.HealthChecks;
 
 namespace HarvestHelper.Equipment.Service

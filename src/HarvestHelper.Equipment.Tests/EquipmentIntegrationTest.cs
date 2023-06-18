@@ -1,242 +1,78 @@
 
 
-// using System.Collections.Generic;
-// using System.Linq;
-// using System.Net;
-// using System.Net.Http;
-// using System.Net.Http.Headers;
-// using System.Threading.Tasks;
-// using HarvestHelper.Common;
-// using HarvestHelper.Equipment.Contracts;
-// using HarvestHelper.Equipment.Service;
-// using HarvestHelper.Equipment.Service.Controllers;
-// using HarvestHelper.Equipment.Service.Dtos;
-// using HarvestHelper.Equipment.Service.Entities;
-// using MassTransit;
-// using Microsoft.AspNetCore.Authorization;
-// using Microsoft.AspNetCore.Mvc.Testing;
-// using Microsoft.Extensions.DependencyInjection;
-// using Microsoft.Extensions.Logging.Console;
-// using Microsoft.Extensions.Logging;
-// using Moq;
-// using Xunit;
+ using System.Collections.Generic;
+ using System.Linq;
+ using System.Net;
+ using System.Net.Http;
+ using System.Net.Http.Headers;
+ using System.Threading.Tasks;
+ using HarvestHelper.Common;
+ using HarvestHelper.Equipment.Contracts;
+ using HarvestHelper.Equipment.Service;
+ using HarvestHelper.Equipment.Service.Controllers;
+ using HarvestHelper.Equipment.Service.Dtos;
+ using HarvestHelper.Equipment.Service.Entities;
+ using MassTransit;
+ using Microsoft.AspNetCore.Authorization;
+ using Microsoft.AspNetCore.Mvc.Testing;
+ using Microsoft.Extensions.DependencyInjection;
+ using Microsoft.Extensions.Logging.Console;
+ using Microsoft.Extensions.Logging;
+ using Moq;
+ using Xunit;
 
-// namespace HarvestHelper.Equipment.Tests
-// {
-// 	public class EquipmentControllerInTests : IClassFixture<WebApplicationFactory<Startup>>
-// 	{
-// 		private readonly WebApplicationFactory<Startup> _factory;
-		
-// 		public EquipmentControllerInTests(WebApplicationFactory<Startup> factory)
-// 		{
+ namespace HarvestHelper.Equipment.Tests
+ {
+ 	public class EquipmentControllerInTests : IClassFixture<WebApplicationFactory<Startup>>
+ 	{
+ 		private readonly WebApplicationFactory<Startup> _factory;
 
-
-// 			_factory = factory;
-
-// 		}
-
-// 		[Fact]
-// 		public async Task GetAsync_ReturnsOk_WithEquipmentItems()
-// 		{
-// 			// Arrange
-// 			var equipmentItems = new List<EquipmentItem>
-// 			{
-// 				new EquipmentItem { Id = Guid.NewGuid(), Name = "Equipment 1" },
-// 				new EquipmentItem { Id = Guid.NewGuid(), Name = "Equipment 2" }
-// 			};
-// 			var mockRepository = new Mock<IRepository<EquipmentItem>>();
-// 			mockRepository.Setup(repo => repo.GetAllAsync())
-// 				.ReturnsAsync(equipmentItems);
-// 			var mockPublishEndpoint = new Mock<IPublishEndpoint>();
-// 			var client = _factory.WithWebHostBuilder(builder =>
-// 			{
-// 				builder.ConfigureServices(services =>
-// 				{
-// 					services.AddSingleton(mockRepository.Object);
-// 					services.AddSingleton(mockPublishEndpoint.Object);
-// 				});
-// 			}).CreateClient();
-
-// 			client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eejtd....");
-// 			client.DefaultRequestHeaders.Accept.Clear();
-// 			client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/plain"));
-// 			client.DefaultRequestHeaders.Host = "harvesthelper.westeurope.cloudapp.azure.com";
-
-// 			// Act
-// 			var response = await client.GetAsync("/equipment");
-
-// 			// Assert
-// 			response.EnsureSuccessStatusCode();
-// 			//var responseContent = await response.Content.ReadAsAsync<IEnumerable<EquipmentDto>>(new[] { new JsonMediaTypeFormatter() });
-// 			//Assert.Equal(equipmentItems.Count, responseContent.Count());
-// 			//foreach (var item in equipmentItems)
-// 			//{
-// 			//	Assert.Contains(responseContent, i => i.Id == item.Id && i.Name == item.Name);
-// 			//}
-// 		}
-// 	}
-// }
-
-/*using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using HarvestHelper.Equipment.Service;
-using HarvestHelper.Equipment.Service.Dtos;
-using HarvestHelper.Equipment.Service.Entities;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using Xunit;
-
-namespace HarvestHelper.Equipment.Tests;
-
-public class EquipmentControllerInteTests : IClassFixture<WebApplicationFactory<Startup>>
-{
-	private readonly WebApplicationFactory<Startup> factory;
-
-	public EquipmentControllerInteTests(WebApplicationFactory<Startup> factory)
-	{
-		this.factory = factory;
-	}
-
-	[Fact]
-	public async Task GetAsync_ReturnsEquipmentItems()
-	{
-		// Arrange
-		var client = factory.CreateClient();
-		var dbContext = factory.Services.GetRequiredService<DbContext>();
-		await dbContext.Database.EnsureDeletedAsync();
-		await dbContext.Database.EnsureCreatedAsync();
-
-		var equipmentItems = new List<EquipmentItem>
-		{
-			new EquipmentItem { Name = "Item 1" },
-			new EquipmentItem { Name = "Item 2" },
-			new EquipmentItem { Name = "Item 3" },
-		};
-		await dbContext.AddRangeAsync(equipmentItems);
-		await dbContext.SaveChangesAsync();
-
-		// Act
-		var response = await client.GetAsync("/equipment");
-		response.EnsureSuccessStatusCode();
-		var responseContent = await response.Content.ReadAsStringAsync();
-		var items = JsonConvert.DeserializeObject<IEnumerable<EquipmentDto>>(responseContent);
-
-		// Assert
-		Assert.Equal(equipmentItems.Count, items.Count());
-		foreach (var item in equipmentItems)
-		{
-			Assert.Contains(items, i => i.Id == item.Id && i.Name == item.Name);
-		}
-	}
-}*/
+ 		public EquipmentControllerInTests(WebApplicationFactory<Startup> factory)
+ 		{
 
 
+ 			_factory = factory;
 
-/*using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using HarvestHelper.Common;
-using HarvestHelper.Equipment.Contracts;
-using HarvestHelper.Equipment.Service;
-using HarvestHelper.Equipment.Service.Controllers;
-using HarvestHelper.Equipment.Service.Dtos;
-using HarvestHelper.Equipment.Service.Entities;
-using HarvestHelper.Inventory.Service;
-using MassTransit;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
-using WebMotions.Fake.Authentication.JwtBearer;
-using Xunit;
-using MongoDB.Bson.Serialization.Serializers;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson;
-using System.Net.Http.Headers;
+ 		}
 
-namespace HarvestHelper.Equipment.Tests;
+ 		[Fact]
+ 		public async Task GetAsync_ReturnsOk_WithEquipmentItems()
+ 		{
+ 			// Arrange
+ 			var equipmentItems = new List<EquipmentItem>
+ 			{
+ 				new EquipmentItem { Id = Guid.NewGuid(), Name = "Equipment 1" },
+ 				new EquipmentItem { Id = Guid.NewGuid(), Name = "Equipment 2" }
+ 			};
+ 			var mockRepository = new Mock<IRepository<EquipmentItem>>();
+			var responseContent = equipmentItems;
+			mockRepository.Setup(repo => repo.GetAllAsync())
+ 				.ReturnsAsync(equipmentItems);
+ 			var mockPublishEndpoint = new Mock<IPublishEndpoint>();
+ 			var client = _factory.WithWebHostBuilder(builder =>
+ 			{
+ 				builder.ConfigureServices(services =>
+ 				{
+ 					services.AddSingleton(mockRepository.Object);
+ 					services.AddSingleton(mockPublishEndpoint.Object);
+ 				});
+ 			}).CreateClient();
 
-public class EquipmentIntegrationTest : IClassFixture<WebApplicationFactory<Startup>>
-{
-	private HttpClient _httpClient;
-	private WebApplicationFactory<Startup> webApplicationFactory;
+ 			client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg5MDNCODlCNzMyOTVEMjk3MEVFNzJCNDBGQTI4RTA1IiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo1MDAzIiwibmJmIjoxNjg2OTQyOTQ5LCJpYXQiOjE2ODY5NDI5NDksImV4cCI6MTY4Njk0NjU0OSwiYXVkIjpbIkVxdWlwbWVudCIsIkVxdWlwbWVudEludmVudG9yeSIsIklkZW50aXR5Il0sInNjb3BlIjpbIm9wZW5pZCIsInByb2ZpbGUiLCJlcXVpcG1lbnQuZnVsbGFjY2VzcyIsImVxdWlwbWVudEludmVudG9yeS5mdWxsYWNjZXNzIiwiSWRlbnRpdHlTZXJ2ZXJBcGkiXSwiYW1yIjpbInB3ZCJdLCJjbGllbnRfaWQiOiJwb3N0bWFuIiwic3ViIjoiYTBiNjcwNTEtZmEyZi00NmZjLTg2YjYtYTczYzU1OTg1YWE0IiwiYXV0aF90aW1lIjoxNjg2OTQyOTQ5LCJpZHAiOiJsb2NhbCIsInJvbGUiOiJBZG1pbiIsInNpZCI6IjcyNzYxQTI5NjVDRjY3NTFBQjAxRDExMTgwQTJEM0M5IiwianRpIjoiRENEMTNBRkRERkZDODFEMTRGODM0NTk3RTYxN0EwMEIifQ.gQaekLVVHJVuYL2avSTAWI9yyFm4iLiVSsYmK1iLL0osYXmJSSebbVeRYlwtItzpz_exACu8aC5LWfkcpsbGArPzRs423d-zyYtY5o0_QroRG2bYteyASlDxjvt7qbGNh8doRNtL31yBBOEd_lZF_0uLnk33QDhw5sNU1ozl8IeFjB4X1uZiOYlEu4rVICttj5gkjBRarhPmW9QC1AIaxmQ1btZMC4_tgvnJ43nDZvo_6wdMJ09gmf9sucglAoHifsNmI09MtTdydxXciDHovYuNnjYZBD5iqG-dvxQJSVavzU2IYRjqKYYGnyUfYkQ7v8DLcSuUogc4M9BVQSdTZw");
+ 			client.DefaultRequestHeaders.Accept.Clear();
+ 			client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/plain"));
+ 			client.DefaultRequestHeaders.Host = "localhost:5001";
 
-	public EquipmentIntegrationTest(WebApplicationFactory<Startup> factory)
-	{
-		var webApplicationFactory = factory;
-		_httpClient = webApplicationFactory.CreateDefaultClient();
-	}
+ 			 //Act
+ 			var response = await client.GetAsync("/equipment");
 
-	*//*[Fact]
-	public async Task GetAsync_ReturnsEquipmentItems()
-	{
-		_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eejtd....");
-		_httpClient.DefaultRequestHeaders.Accept.Clear();
-		_httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/plain"));
-		_httpClient.DefaultRequestHeaders.Host = "harvesthelper.westeurope.cloudapp.azure.com";
-
-		var response = await _httpClient.GetAsync("/equipment");
-		var result = await response.Content.ReadAsStringAsync();
-		Console.Write(result);
-		Assert.True(!string.IsNullOrEmpty(result));
-	}*/
-/*
-	[Fact]
-	public async Task test()
-	{
-		var builder = new WebHostBuilder().UseStartup<TestStartup>();
-		var testServer = new TestServer(builder);
-		var client = testServer.CreateClient();
-
-		var result = await client.GetAsync("/equipment");
-
-		Assert.Equal(HttpStatusCode.OK, result.StatusCode);
-	}*/
-/*[Fact]
-public async Task GetAsync_ReturnsEquipmentItems()
-{
-	// Arrange
-	var client = webApplicationFactory.CreateClient();
-	var equipmentRepository = webApplicationFactory.Services.GetService<IRepository<EquipmentItem>>();
-
-	using var scope = webApplicationFactory.Services.CreateScope();
-	var publishEndpoint = scope.ServiceProvider.GetService<IPublishEndpoint>();
-
-	var equipment1 = new EquipmentItem { Name = "Equipment 1" };
-	var equipment2 = new EquipmentItem { Name = "Equipment 2" };
-	await equipmentRepository.CreateAsync(equipment1);
-	await equipmentRepository.CreateAsync(equipment2);
-
-	// Set the authorization header
-	client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eejtd....");
-	client.DefaultRequestHeaders.Accept.Clear();
-	client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/plain"));
-	client.DefaultRequestHeaders.Host = "harvesthelper.westeurope.cloudapp.azure.com";
-
-	// Act
-	var response = await client.GetAsync("/equipment");
-	var responseContent = await response.Content.ReadAsStringAsync();
-	var items = JsonConvert.DeserializeObject<IEnumerable<EquipmentDto>>(responseContent);
-
-	// Assert
-	Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-	Assert.Equal(2, items.Count());
-	Assert.Contains(items, item => item.Id == equipment1.Id && item.Name == equipment1.Name);
-	Assert.Contains(items, item => item.Id == equipment2.Id && item.Name == equipment2.Name);
-}*//*
+ 			// Assert
+ 			response.EnsureSuccessStatusCode();
+ 			Assert.Equal(equipmentItems.Count, responseContent.Count());
+ 			foreach (var item in equipmentItems)
+ 			{
+ 				Assert.Contains(responseContent, i => i.Id == item.Id && i.Name == item.Name);
+ 			}
+ 		}
+ 	}
 }
-*/
